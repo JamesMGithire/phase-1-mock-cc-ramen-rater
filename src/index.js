@@ -67,8 +67,8 @@ sub.addEventListener("submit", (e) => {
     fetch(`http://localhost:3000/ramens/${divImg.id}`, {
         method: "PATCH",
         body: JSON.stringify({
-            rating : divRate.textContent,
-            comment : divComment.textContent
+            rating: divRate.textContent,
+            comment: divComment.textContent
         }),
         headers: {
             "Content-Type": "application/json"
@@ -76,3 +76,23 @@ sub.addEventListener("submit", (e) => {
     })
 })
 
+// Post item
+const create = document.querySelector('#create');
+create.addEventListener("click", (e) => {
+    e.preventDefault();
+    const els = e.target.parentNode.elements
+    fetch("http://localhost:3000/ramens", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        body: JSON.stringify({
+            name: `${els["new-name"].value}`,
+            restaurant: `${els["new-restaurant"].value}`,
+            image: `${els["new-image"].value}`,
+            rating: `${els["new-rating"].value}`,
+            comment: `${els["new-comment"].value}`
+        })
+    })
+})
