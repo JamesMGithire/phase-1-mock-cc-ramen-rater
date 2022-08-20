@@ -91,7 +91,7 @@ create.addEventListener("click", (e) => {
             name: `${els["new-name"].value}`,
             restaurant: `${els["new-restaurant"].value}`,
             image: `${els["new-image"].value}`,
-            rating: `${els["new-rating"].value}`,
+            rating: els["new-rating"].value,
             comment: `${els["new-comment"].value}`
         })
     })
