@@ -16,22 +16,29 @@ function placeImg(obj) {
         divName.textContent = obj.name;
         divRes.textContent = obj.restaurant
         divImg.src = obj.image;
+        divImg.id = obj.id;
         divRate.textContent = obj.rating;
         divComment.textContent = obj.comment;
     })
+    // Delete items from db
     const del = document.createElement("button");
     del.textContent = "<<Del";
     del.addEventListener("click", () => {
         imgDiv.remove();
-        fetch(`http://localhost:3000/ramens/${obj.id}`,{
-            method:"DELETE",
-            headers:{
-                "Content-Type":"application/json"
+        fetch(`http://localhost:3000/ramens/${obj.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
             }
         })
         location.reload();
     });
     imgDiv.appendChild(del);
+    // Patch items in db
+    // const patch = document.createElement('button');
+    // patch.addEventListener("click", () => {
+
+    // })
 }
 fetch("http://localhost:3000/ramens")
     .then(resp => resp.json())
@@ -44,6 +51,7 @@ fetch("http://localhost:3000/ramens")
         divName.textContent = obj[0].name;
         divRes.textContent = obj[0].restaurant;
         divImg.src = obj[0].image;
+        divImg.id = obj[0].id;
         divRate.textContent = obj[0].rating;
         divComment.textContent = obj[0].comment;
     });
@@ -55,5 +63,16 @@ sub.addEventListener("submit", (e) => {
     // changes on frontend only and no backend
     divRate.textContent = e.target.elements["new-rating"].value;
     divComment.textContent = e.target.elements["new-comment"].value;
+    console.log(divImg.id);
+    fetch(`http://localhost:3000/ramens/${divImg.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+            rating : divRate.textContent,
+            comment : divComment.textContent
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
 })
 
